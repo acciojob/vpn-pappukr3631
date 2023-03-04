@@ -128,7 +128,8 @@ public class ConnectionServiceImpl implements ConnectionService {
         }catch (Exception e) {
             if(e.getMessage().equals("Already connected") || e.getMessage().equals("Unable to connect")) {
 //                throw new Exception("Cannot establish communication");
-                throw new Exception(e.getMessage());
+//                throw new Exception(e.getMessage());
+                return sender;
             }
         }
         return sender;
