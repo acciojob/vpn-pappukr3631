@@ -15,7 +15,7 @@ public class User {
     private String originalIp;
     private String maskedIp;
 
-    private boolean connected;
+    private boolean connected = false;
 
     //Mappings
     //1. to ServiceProvider
@@ -34,7 +34,7 @@ public class User {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -98,7 +98,7 @@ public class User {
     }
 
     public Country getOriginalCountry() {
-        return originalCountry;
+        return this.originalCountry;
     }
 
     public void setOriginalCountry(Country originalCountry) {

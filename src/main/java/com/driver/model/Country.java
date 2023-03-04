@@ -9,7 +9,7 @@ public class Country{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Enumerated(value = EnumType.STRING)
     private CountryName countryName;
     private String code;
 
@@ -36,7 +36,7 @@ public class Country{
     }
 
     public CountryName getCountryName() {
-        return countryName;
+        return this.countryName;
     }
 
     public void setCountryName(CountryName countryName) {

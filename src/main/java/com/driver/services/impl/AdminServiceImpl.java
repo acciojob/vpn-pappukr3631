@@ -11,6 +11,8 @@ import com.driver.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class AdminServiceImpl implements AdminService {
     @Autowired
@@ -69,7 +71,12 @@ public class AdminServiceImpl implements AdminService {
         countryName = countryName.toUpperCase();
 
         Country country = new Country();
-        country.setCountryName(CountryName.valueOf(countryName));
+        for(CountryName c : CountryName.values()) {
+            if(c.toString().equals(countryName)) {
+                country.setCountryName(c);
+                break;
+            }
+        }
         country.setCode(CountryName.valueOf(countryName).toCode());
 
         country.setServiceProvider(serviceProvider);
