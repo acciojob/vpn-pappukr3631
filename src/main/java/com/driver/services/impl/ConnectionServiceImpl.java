@@ -116,16 +116,15 @@ public class ConnectionServiceImpl implements ConnectionService {
         User sender = userRepository2.findById(senderId).get();
         User receiver = userRepository2.findById(receiverId).get();
 
-        //1. check if the sender is in same country as the receiver, if yes return
+        //1. check if the sender is in same country as the receiver, if yes return sender
         //      else try to make vpn connection to the receiver's country : if not possible throw exception
-        String senderCountry = sender.getMaskedIp()==null ? sender.getOriginalCountry().getCountryName().toString() : sender.getMaskedIp().substring(0,3);
+        String senderCountry = sender.getOriginalCountry().getCountryName().toString();
         String receiverCountry = receiver.getMaskedIp()==null ? receiver.getOriginalCountry().getCountryName().toString() : receiver.getMaskedIp().substring(0,3);
         if(senderCountry.equals(receiverCountry)) {
             return sender;
         }
         try {
-            sender = connect(senderId, receiverCountry);
-            return sender;
+            return connect(senderId, receiverCountry);
         }catch (Exception e) {
             if(e.getMessage().equals("Already connected") || e.getMessage().equals("Unable to connect"))
                 throw new Exception("Cannot establish communication");
