@@ -124,7 +124,8 @@ public class ConnectionServiceImpl implements ConnectionService {
             return sender;
         }
         try {
-            return connect(senderId, receiverCountry);
+            sender = connect(senderId, receiverCountry);
+            return sender;
         }catch (Exception e) {
 //            if(e.getMessage().equals("Already connected") || e.getMessage().equals("Unable to connect")) {
 ////                throw new Exception("Cannot establish communication");
