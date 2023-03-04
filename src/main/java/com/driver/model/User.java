@@ -15,7 +15,7 @@ public class User {
     private String originalIp;
     private String maskedIp;
 
-    private boolean connected = false;
+    private Boolean connected = false;
 
     //Mappings
     //1. to ServiceProvider
