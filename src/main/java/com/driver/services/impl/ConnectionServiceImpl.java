@@ -34,11 +34,11 @@ public class ConnectionServiceImpl implements ConnectionService {
         //      service provider having smallest id.
 
         User user = userRepository2.findById(userId).get();
-        if(user.isConnected()) {
+        if(user.getConnected()) {
             throw new Exception("Already connected");
         }
 
-        if (user.getCountry().getCountryName().toString().equals(countryName.toUpperCase())) {
+        if (user.getOriginalCountry().getCountryName().toString().equals(countryName.toUpperCase())) {
             return user;
         }
 
@@ -87,7 +87,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         //Else, disconnect from vpn, make masked Ip as null, update relevant attributes and return updated user.
         User user = userRepository2.findById(userId).get();
 
-        if(!user.isConnected()) {
+        if(!user.getConnected()) {
             throw new Exception("Already disconnected");
         }
         //disconnecting VPN
@@ -114,8 +114,8 @@ public class ConnectionServiceImpl implements ConnectionService {
 
         //1. check if the sender is in same country as the receiver, if yes return
         //      else try to make vpn connection to the receiver's country : if not possible throw exception
-        String senderCountry = sender.getMaskedIp()==null ? sender.getCountry().getCountryName().toString() : sender.getMaskedIp().substring(0,3);
-        String receiverCountry = receiver.getMaskedIp()==null ? receiver.getCountry().getCountryName().toString() : receiver.getMaskedIp().substring(0,3);
+        String senderCountry = sender.getMaskedIp()==null ? sender.getOriginalCountry().getCountryName().toString() : sender.getMaskedIp().substring(0,3);
+        String receiverCountry = receiver.getMaskedIp()==null ? receiver.getOriginalCountry().getCountryName().toString() : receiver.getMaskedIp().substring(0,3);
         if(senderCountry.equals(receiverCountry)) {
             return sender;
         }

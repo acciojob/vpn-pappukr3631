@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         user.setOriginalIp(country.getCode() +"." + user.getId());
         user.setMaskedIp(null); // optional
-        user.setCountry(country);
+        user.setOriginalCountry(country);
         user.setConnected(false);//optional
 
         userRepository3.save(user);
