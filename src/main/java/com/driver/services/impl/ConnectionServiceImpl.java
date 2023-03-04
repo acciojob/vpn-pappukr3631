@@ -75,6 +75,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         user.setMaskedIp(CountryName.valueOf(countryName.toUpperCase()).toCode() + "." + serviceProvider1.getId() + "." + userId);
         user.getConnectionList().add(connection);
 
+        serviceProvider1.getConnectionList().add(connection);
 
         //save
         userRepository2.save(user);
