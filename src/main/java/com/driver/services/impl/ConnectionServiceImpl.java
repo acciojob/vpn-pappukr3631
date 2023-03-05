@@ -181,8 +181,10 @@ public class ConnectionServiceImpl implements ConnectionService {
         try {
             if(sender.getConnected()) {
                 sender = disconnect(senderId);
+                userRepository2.save(sender);
             }
             sender = connect(senderId, receiverCountry);
+            userRepository2.save(sender);
             return sender;
         }catch (Exception e) {
 //            if(e.getMessage().equals("Already connected") || e.getMessage().equals("Unable to connect")) {
