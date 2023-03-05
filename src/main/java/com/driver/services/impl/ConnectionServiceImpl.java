@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
@@ -33,12 +34,13 @@ public class ConnectionServiceImpl implements ConnectionService {
         //      return the updated user. If multiple service providers allow you to connect to the country, use the
         //      service provider having smallest id.
 
+        countryName = countryName.toUpperCase();
         User user = userRepository2.findById(userId).get();
         if(user.getConnected()) {
             throw new Exception("Already connected");
         }
 
-        if (user.getOriginalCountry().getCountryName().toString().equals(countryName.toUpperCase())) {
+        if (user.getOriginalCountry().getCountryName().toString().equals(countryName)) {
             return user;
         }
 
@@ -53,7 +55,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             List<Country> countryList = currentServiceProvider.getCountryList();
             for(Country currentCountry : countryList)
             {
-                if(currentCountry.getCountryName().toString() == countryName.toUpperCase())
+                if(Objects.equals(currentCountry.getCountryName().toString(), countryName))
                 {
                     if(serviceProvider == null || currentServiceProvider.getId() < serviceProvider.getId())
                     {
