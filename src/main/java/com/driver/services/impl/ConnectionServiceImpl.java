@@ -48,18 +48,22 @@ public class ConnectionServiceImpl implements ConnectionService {
         }
 
         ServiceProvider serviceProvider = null;
-        for(ServiceProvider currentServiceProvider : serviceProviderList) {
+        for(ServiceProvider currentServiceProvider : serviceProviderList)
+        {
             List<Country> countryList = currentServiceProvider.getCountryList();
-            for(Country currentCountry : countryList) {
-                if(currentCountry.getCountryName().toString().equals(countryName.toUpperCase())) {
-                    if(serviceProvider == null || currentServiceProvider.getId() < serviceProvider.getId()) {
+            for(Country currentCountry : countryList)
+            {
+                if(currentCountry.getCountryName().toString() == countryName.toUpperCase())
+                {
+                    if(serviceProvider == null || currentServiceProvider.getId() < serviceProvider.getId())
+                    {
                         serviceProvider = currentServiceProvider;
                     }
                 }
             }
         }
         if(serviceProvider == null) {
-            throw new Exception("Unable to connect1");
+            throw new Exception("Unable to connect");
         }
 
 
