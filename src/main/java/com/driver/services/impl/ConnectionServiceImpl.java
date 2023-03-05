@@ -47,39 +47,36 @@ public class ConnectionServiceImpl implements ConnectionService {
             throw new Exception("Unable to connect");
         }
 
-//        boolean available = false;
-        ServiceProvider serviceProvider1 = null;
-        for(ServiceProvider serviceProvider : serviceProviderList) {
-            List<Country> countryList = serviceProvider.getCountryList();
-            for(Country c : countryList) {
-                if(c.getCountryName().toString().equals(countryName.toUpperCase())) {
-//                    available = true;
-//                    break;
-                    if(serviceProvider1 == null || serviceProvider.getId() < serviceProvider1.getId()) {
-                        serviceProvider1 = serviceProvider;
+        ServiceProvider serviceProvider = null;
+        for(ServiceProvider currentServiceProvider : serviceProviderList) {
+            List<Country> countryList = currentServiceProvider.getCountryList();
+            for(Country currentCountry : countryList) {
+                if(currentCountry.getCountryName().toString().equals(countryName.toUpperCase())) {
+                    if(serviceProvider == null || currentServiceProvider.getId() < serviceProvider.getId()) {
+                        serviceProvider = currentServiceProvider;
                     }
                 }
             }
         }
-        if(serviceProvider1 == null) {
-            throw new Exception("Unable to connect");
+        if(serviceProvider == null) {
+            throw new Exception("Unable to connect1");
         }
 
 
         //Making connection
         Connection connection = new Connection();
-        connection.setServiceProvider(serviceProvider1);
+        connection.setServiceProvider(serviceProvider);
         connection.setUser(user);
 
         user.setConnected(true);
-        user.setMaskedIp(CountryName.valueOf(countryName.toUpperCase()).toCode() + "." + serviceProvider1.getId() + "." + userId);
+        user.setMaskedIp(CountryName.valueOf(countryName.toUpperCase()).toCode() + "." + serviceProvider.getId() + "." + userId);
         user.getConnectionList().add(connection);
 
-        serviceProvider1.getConnectionList().add(connection);
+        serviceProvider.getConnectionList().add(connection);
 
         //save
         userRepository2.save(user);
-        serviceProviderRepository2.save(serviceProvider1);
+        serviceProviderRepository2.save(serviceProvider);
 
         return user;
     }
@@ -131,8 +128,8 @@ public class ConnectionServiceImpl implements ConnectionService {
             return sender;
         }catch (Exception e) {
 //            if(e.getMessage().equals("Already connected") || e.getMessage().equals("Unable to connect")) {
-                throw new Exception("Cannot establish communication");
-////                throw new Exception(e.getMessage());
+//                throw new Exception("Cannot establish communication");
+                throw new Exception(e.getMessage());
 //            }
 //            return sender;
         }
