@@ -116,7 +116,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         //      anything as they can communicate. Return the sender as it is.
         //If communication can not be established due to any reason, throw "Cannot establish communication" exception
 
-        User sender = userRepository2.findById(senderId).get();
+       /* User sender = userRepository2.findById(senderId).get();
         User receiver = userRepository2.findById(receiverId).get();
 
         //1. check if the sender is in same country as the receiver, if yes return sender
@@ -138,6 +138,50 @@ public class ConnectionServiceImpl implements ConnectionService {
 //                throw new Exception(e.getMessage());
 //            }
 //            return sender;
+        }*/
+
+
+        User user = userRepository2.findById(senderId).get();
+        User user1 = userRepository2.findById(receiverId).get();
+
+        if(user1.getMaskedIp()!=null){
+            String str = user1.getMaskedIp();
+            String cc = str.substring(0,3); //chopping country code = cc
+
+            if(cc.equals(user.getOriginalCountry().getCode()))
+                return user;
+            else {
+                String countryName = "";
+
+                if (cc.equalsIgnoreCase(CountryName.IND.toCode()))
+                    countryName = CountryName.IND.toString();
+                if (cc.equalsIgnoreCase(CountryName.USA.toCode()))
+                    countryName = CountryName.USA.toString();
+                if (cc.equalsIgnoreCase(CountryName.JPN.toCode()))
+                    countryName = CountryName.JPN.toString();
+                if (cc.equalsIgnoreCase(CountryName.CHI.toCode()))
+                    countryName = CountryName.CHI.toString();
+                if (cc.equalsIgnoreCase(CountryName.AUS.toCode()))
+                    countryName = CountryName.AUS.toString();
+
+                User user2 = connect(senderId,countryName);
+                if (!user2.getConnected()){
+                    throw new Exception("Cannot establish communication");
+
+                }
+                else return user2;
+            }
+
+        }
+        else {
+            if (user1.getOriginalCountry().equals(user.getOriginalCountry())) {
+                return user;
+            }
+            String countryName = user1.getOriginalCountry().getCountryName().toString();
+            User user2 = connect(senderId, countryName);
+            if (!user2.getConnected()) {
+                throw new Exception("Cannot establish communication");
+            } else return user2;
         }
     }
 }
