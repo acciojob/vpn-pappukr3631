@@ -168,7 +168,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         //      anything as they can communicate. Return the sender as it is.
         //If communication can not be established due to any reason, throw "Cannot establish communication" exception
 
-       /* User sender = userRepository2.findById(senderId).get();
+       User sender = userRepository2.findById(senderId).get();
         User receiver = userRepository2.findById(receiverId).get();
 
         //1. check if the sender is in same country as the receiver, if yes return sender
@@ -190,10 +190,10 @@ public class ConnectionServiceImpl implements ConnectionService {
 //                throw new Exception(e.getMessage());
 //            }
 //            return sender;
-        }*/
+        }
 
 
-        User user = userRepository2.findById(senderId).get();
+        /*User user = userRepository2.findById(senderId).get();
         User user1 = userRepository2.findById(receiverId).get();
 
         if(user1.getMaskedIp()!=null){
@@ -234,6 +234,6 @@ public class ConnectionServiceImpl implements ConnectionService {
             if (!user2.getConnected()) {
                 throw new Exception("Cannot establish communication");
             } else return user2;
-        }
+        }*/
     }
 }
