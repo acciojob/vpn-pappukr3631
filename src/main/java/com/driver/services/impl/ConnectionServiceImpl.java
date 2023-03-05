@@ -55,7 +55,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             List<Country> countryList = currentServiceProvider.getCountryList();
             for(Country currentCountry : countryList)
             {
-                if(Objects.equals(currentCountry.getCountryName().toString(), countryName))
+                if(currentCountry.getCountryName().toString().equals(countryName))
                 {
                     if(serviceProvider == null || currentServiceProvider.getId() < serviceProvider.getId())
                     {
@@ -134,8 +134,8 @@ public class ConnectionServiceImpl implements ConnectionService {
             return sender;
         }catch (Exception e) {
 //            if(e.getMessage().equals("Already connected") || e.getMessage().equals("Unable to connect")) {
-//                throw new Exception("Cannot establish communication");
-                throw new Exception(e.getMessage());
+                throw new Exception("Cannot establish communication");
+//                throw new Exception(e.getMessage());
 //            }
 //            return sender;
         }
